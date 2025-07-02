@@ -6,6 +6,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.edge.EdgeDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.safari.SafariDriver;
+import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 
 import com.tech_connect.pagesclass.Login;
@@ -39,11 +40,16 @@ public class BaseClass extends BaseDriver{
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		Login lg = new Login(driver);
 		lg.loginValidation(u_name, pass);
-	
-//		Thread.sleep(2000);
-
-		
 
 	}
+	
+//	@AfterClass
+//	public void postCodition() {
+//		Login lg = new Login(driver);
+//		lg.logOutValidation();
+//		System.out.println("Admin LogOut succefully");
+//		driver.close();
+//		driver.quit();		
+//	}
 
 }
