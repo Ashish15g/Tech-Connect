@@ -1,0 +1,7 @@
+{
+  "theme": "Standard",
+  "documentTitle": "Tech-Connect Testing Report",
+  "reportName": "Test Execution Summary",
+  "timelineEnabled": true,
+  "customCss": ".report-name:before { content: url('./techConnect.png'); display: inline-block; vertical-align: middle; margin-right: 10px; height: 40px; }"
+}

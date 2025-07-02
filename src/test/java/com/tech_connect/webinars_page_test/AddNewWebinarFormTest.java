@@ -41,12 +41,12 @@ public class AddNewWebinarFormTest extends BaseClass{
 		// Before clicking date fields or submit button
 		ActionDriver.waitForElementNotVisible(By.cssSelector(".modal,.loader,.overlay"), 10);
 		ActionDriver.safeClick(webPage.start_date);
-		GetDates.selectDate(webPage.start_monthElem, webPage.start_nextButton, webPage.dateElements, "June 2025", "29");
+		GetDates.selectDate(webPage.start_monthElem, webPage.start_nextButton, webPage.dateElements, "June 2027", "29");
 		// Select end date
 		ActionDriver.scrollToElement(webPage.end_date);		
 		//ActionDriver.waitForElementClickable(webPage.end_date, 100);
         ActionDriver.safeClick(webPage.end_date);
-        GetDates.selectDate(webPage.end_monthElem, webPage.end_nextButton, webPage.dateElements, "July 2025", "30");
+        GetDates.selectDate(webPage.end_monthElem, webPage.end_nextButton, webPage.dateElements, "July 2027", "30");
 		ActionDriver.safeClick(webPage.outside_Click);
         // Upload webinar image
         ActionDriver.scrollToElement(webPage.webinarImage);
@@ -71,6 +71,7 @@ public class AddNewWebinarFormTest extends BaseClass{
 		// Assert that the success message is displayed
 		Assert.assertTrue(ActionDriver.isDisplayed(webPage.webinar_Add_Sufull),
 				"Webinar added successfully message is not displayed");
+		Reporter.log("Webinar added successfully", true);
 		// Reset the form
 //		ActionDriver.scrollToElement(webPage.resetButton);
 //		ActionDriver.waitForElementClickable(webPage.resetButton, 10);

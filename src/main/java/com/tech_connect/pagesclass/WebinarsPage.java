@@ -11,6 +11,8 @@ public class WebinarsPage {
 	public WebinarsPage(WebDriver driver) {
 		PageFactory.initElements(driver, this);		
 	}
+	public @FindBy(xpath = "//img[@alt='logo-text']")
+	WebElement logoText;
 	//WebElements for the Webinars and Events page here
 	
 			public @FindBy(xpath = "(//span[@class='d-block'])[1]")
@@ -75,7 +77,9 @@ public class WebinarsPage {
 			WebElement webinarDetails;
 			public @FindBy(xpath = "(//button[contains(text(),' Delete')])[1]")
 			WebElement deleteWebinar;
-			public @FindBy(xpath = "//button[@type='button'][text()='Yes, remove it!']")
+			public @FindBy(xpath = "//button[text()='Yes, remove it!']")
+			WebElement confirmDeleteWebinarsection;
+			public @FindBy(xpath = "//button[text()='Yes, delete it!']")
 			WebElement confirmDeleteButton;
 			public @FindBy(xpath = "//div[text()='Webinar deleted successfully.']")
 			WebElement webinar_Delete_Sufull;
@@ -215,4 +219,21 @@ public class WebinarsPage {
 			WebElement sponsorUpdateSuccessMessage;
 			public @FindBy(xpath = "//div[text()='Sponsor removed successfully.']")
 			WebElement sponsorDeleteSuccessMessage;
+			//Webinar Details Video Upload
+			public @FindBy(xpath = "//small[text()='Videos']")
+			WebElement videosSection;
+			public @FindBy(xpath = "//span[text()='Add Video']")
+			WebElement addVideoButton;
+			public @FindBy(xpath = "//button[text()='Upload Video']")
+			WebElement uploadVideoButton;
+			public @FindBy(xpath = "//button[text()='Yes, upload it!']")
+			WebElement confirmUploadVideoButton;
+			public @FindBy(xpath = "//div[text()='Upload completed successfully!']")
+			WebElement videoUploadSuccessMessage;
+			public @FindBy(xpath = "//button[@class='btn btn-sm '][@type='button']")
+			WebElement deleteVideoButton;
+			public @FindBy(xpath = "//button[text()='Yes']")
+			WebElement confirmDeleteVideoButton;
+			public @FindBy(xpath = "//div[text()='Video deleted successfully!']")
+			WebElement videoDeleteSuccessMessage;
 }

@@ -43,13 +43,13 @@ public class BaseClass extends BaseDriver{
 
 	}
 	
-//	@AfterClass
-//	public void postCodition() {
-//		Login lg = new Login(driver);
-//		lg.logOutValidation();
-//		System.out.println("Admin LogOut succefully");
-//		driver.close();
-//		driver.quit();		
-//	}
+	@AfterClass
+	public void postCodition() {
+		Login lg = new Login(driver);
+		lg.logOutValidation();
+		System.out.println("Admin LogOut succefully");
+		driver.close();
+		driver.quit();		
+	}
 
 }

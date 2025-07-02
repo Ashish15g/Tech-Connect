@@ -145,6 +145,7 @@ public class ActionDriver extends BaseDriver {
 		try {
 			int seconds = Integer.parseInt(GetpropData.propData("explicitWait"));
 			waitForElementClickable(element, seconds);
+			highlightElement(element, "green");
 			js.executeScript("arguments[0].click();", element);
 		} catch (Exception e) {
 			System.out.println("JS click failed: " + e.getMessage());
