@@ -15,9 +15,9 @@ public class WebinarsPage {
 	WebElement logoText;
 	//WebElements for the Webinars and Events page here
 	
-			public @FindBy(xpath = "(//span[@class='d-block'])[1]")
+			public @FindBy(xpath = "//span[contains(text(),'Events')]")
 			WebElement eventsSection;
-			public @FindBy(xpath = "//span[text()='Webinars']")
+			public @FindBy(xpath = "//span[contains(text(),'Webinars')]")
 			WebElement webinarsSection;
 			public @FindBy(xpath = "//button[text()='Add New']")
 			WebElement addNewButton;
@@ -71,11 +71,11 @@ public class WebinarsPage {
 			WebElement webinar_Add_Sufull;
 			
 			//Nevigation to the Webinars details/Delete section
-			public @FindBy(xpath = "(//i[@class='bi bi-three-dots-vertical'])[1]")
-			WebElement web_Det_Del_But_secn;
-			public @FindBy(xpath = "(//a[contains(text(),'Details')])[1]")
+			public @FindBy(xpath = "//button[starts-with(@id, 'dropdownMenuButton-') and @type='button']")
+			List<WebElement> menuButton;
+			public @FindBy(xpath = "//ul[@class='dropdown-menu dropdown-menu-end show']//a[@title='Details'][normalize-space()='Details']")
 			WebElement webinarDetails;
-			public @FindBy(xpath = "(//button[contains(text(),' Delete')])[1]")
+			public @FindBy(xpath = "//ul[@class='dropdown-menu dropdown-menu-end show']//button[@title='Delete'][normalize-space()='Delete']")
 			WebElement deleteWebinar;
 			public @FindBy(xpath = "//button[text()='Yes, remove it!']")
 			WebElement confirmDeleteWebinarsection;
@@ -219,7 +219,7 @@ public class WebinarsPage {
 			WebElement sponsorUpdateSuccessMessage;
 			public @FindBy(xpath = "//div[text()='Sponsor removed successfully.']")
 			WebElement sponsorDeleteSuccessMessage;
-			//Webinar Details Video Upload
+			//Webinar session Video Upload
 			public @FindBy(xpath = "//small[text()='Videos']")
 			WebElement videosSection;
 			public @FindBy(xpath = "//span[text()='Add Video']")

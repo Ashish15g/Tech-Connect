@@ -22,8 +22,8 @@ public class UpdateWebinarDetailsTest extends BaseClass {
 		ActionDriver.click(webPage.eventsSection);
 		ActionDriver.click(webPage.webinarsSection);
 		ActionDriver.waitForElementNotVisible(By.cssSelector(".modal,.loader,.overlay"), 20);
-		ActionDriver.scrollToElement(webPage.web_Det_Del_But_secn);
-		ActionDriver.safeClick(webPage.web_Det_Del_But_secn);
+		ActionDriver.scrollToElement(webPage.menuButton.get(0));
+		ActionDriver.safeClick(webPage.menuButton.get(0));
 		ActionDriver.jsClick(webPage.webinarDetails);
 	}
 	@AfterMethod
@@ -152,7 +152,7 @@ public void addNewSpeaker() throws AWTException, InterruptedException {
    ActionDriver.jsClick(webPage.speakersSection);
    ActionDriver.waitForElementNotVisible(By.cssSelector(".modal,.loader,.overlay"), 10);
    ActionDriver.scrollToElement(webPage.addNewSpeakerButton);
-   ActionDriver.jsClick(webPage.addNewSpeakerButton);
+   ActionDriver.safeClick(webPage.addNewSpeakerButton);
    fillSpeakerForm("John Doe", "agshish@metapercept.com", "AI Specialist",
        "Good speaker with expertise in AI", "https://www.linkedin.com/in/johndoe/", false);
 	verifySuccess(webPage.speakerAddedSuccessMessage,"Speaker added successfully.");

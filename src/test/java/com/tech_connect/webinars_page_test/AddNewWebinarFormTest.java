@@ -85,8 +85,8 @@ public void verifyDeleteWebinar() {
 		ActionDriver.click(webPage.eventsSection);
 		ActionDriver.click(webPage.webinarsSection);
 		ActionDriver.waitForElementNotVisible(By.cssSelector(".modal,.loader,.overlay"), 10);
-		ActionDriver.scrollToElement(webPage.web_Det_Del_But_secn);
-		ActionDriver.safeClick(webPage.web_Det_Del_But_secn);
+		ActionDriver.scrollToElement(webPage.menuButton.get(0));
+		ActionDriver.safeClick(webPage.menuButton.get(0));
 		ActionDriver.jsClick(webPage.deleteWebinar);
 		ActionDriver.jsClick(webPage.confirmDeleteButton);
 		// Wait for the success message
