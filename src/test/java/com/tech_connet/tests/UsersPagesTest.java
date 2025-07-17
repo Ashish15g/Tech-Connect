@@ -69,7 +69,7 @@ public class UsersPagesTest extends BaseClass {
 				"C:\\EclipseJava\\Tech-Connect\\src\\test\\resources\\testData\\TC_Import_User_Data.xlsx");
 		Toolkit.getDefaultToolkit().getSystemClipboard().setContents(filepathSection, null);
 		Thread.sleep(5000);
-		ActionDriver.pressEnter1();
+		ActionDriver.pressEnter();
 		Thread.sleep(5000);
 		ActionDriver.click(usersPage.submitButton);
 

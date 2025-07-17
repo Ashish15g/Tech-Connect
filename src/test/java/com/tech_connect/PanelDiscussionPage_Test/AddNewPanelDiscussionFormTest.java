@@ -17,21 +17,21 @@ public class AddNewPanelDiscussionFormTest extends BaseClass {
 	@BeforeMethod
 	public void setup() {
 		pD = new PanelDiscussionPage(driver);
-		ActionDriver.click(pD.eventsSection);
-		ActionDriver.click(pD.panelDiscussionsSection);
+		ActionDriver.safeClick(pD.eventsSection);
+		ActionDriver.safeClick(pD.panelDiscussionsSection);
 	}
 	private void selectDate(boolean isSession, String startMonth, String startDay, String endMonth, String endDay) {
-		var startElement = isSession ? pD.sessionStartDate : pD.start_date;
-		var endElement = isSession ? pD.sessionEndDate : pD.end_date;
+		var startElement = isSession ? pD.startDateSection : pD.startDateSection;
+		var endElement = isSession ? pD.endDateSection : pD.endDateSection;
 		
 		ActionDriver.scrollToElement(startElement);
 		ActionDriver.waitForElementNotVisible(By.cssSelector(".modal,.loader,.overlay"), 10);
 		ActionDriver.safeClick(startElement);
-		GetDates.selectDate(pD.start_monthElem, pD.start_nextButton, pD.dateElements, startMonth, startDay);
+		GetDates.selectDate(pD.start_monthElem, pD.start_nextButton, pD.startDateElements, startMonth, startDay);
 		
 		ActionDriver.scrollToElement(endElement);
 		ActionDriver.safeClick(endElement);
-		GetDates.selectDate(pD.end_monthElem, pD.end_nextButton, pD.dateElements, endMonth, endDay);
+		GetDates.selectDate(pD.end_monthElem, pD.end_nextButton, pD.endDateElements, endMonth, endDay);
 	}
 	private void fillPanelDiscussionForm(String eventName, String poweredBy, String description, String industryTag,
 			String location, String startMonth, String startDay, String endMonth, String endDay) throws InterruptedException, AWTException {
@@ -56,14 +56,14 @@ public class AddNewPanelDiscussionFormTest extends BaseClass {
 		selectDate(false, startMonth, startDay, endMonth, endDay);
 		ActionDriver.safeClick(pD.outside_Click);
 		
-		ActionDriver.scrollToElement(pD.webinarImage);
-		ActionDriver.waitForElementClickable(pD.webinarImage, 50);
-		ActionDriver.safeClick(pD.webinarImage);
+		ActionDriver.scrollToElement(pD.eventImage);
+		ActionDriver.waitForElementClickable(pD.eventImage, 50);
+		ActionDriver.safeClick(pD.eventImage);
 		ActionDriver.uploadFile("C:\\EclipseJava\\Tech-Connect\\src\\test\\resources\\images\\AI1.png");
 		
 		ActionDriver.selectDropdownByVisibleText(pD.eventCategory.get(2), "Public");
 		ActionDriver.enterText(pD.eventUrl, "https://www.tech-connect.com/webinar/gen-ai-2.0");
-		ActionDriver.enterText(pD.zoomLink, "https://zoom.us/j/1234567890");
+		//ActionDriver.enterText(pD.zoomLink, "https://zoom.us/j/1234567890");
 		
 		
 	}
@@ -111,14 +111,37 @@ public class AddNewPanelDiscussionFormTest extends BaseClass {
 			Assert.fail("Test failed due to exception: " + e.getMessage());
 		}
 	 }
-	@Test(priority = 2)
-	public void verifyDeletePanelDiscussion() {
+	@Test(priority = 2,invocationCount = 10, threadPoolSize = 2)
+	public void verifyDeletePanelDiscussion() throws InterruptedException {
 		
-		ActionDriver.waitForElementNotVisible(By.cssSelector(".modal,.loader,.overlay"), 10);
+		//ActionDriver.waitForElementNotVisible(By.cssSelector(".modal,.loader,.overlay"), 10);
 		ActionDriver.scrollToElement(pD.menuButton.get(0));
 		ActionDriver.safeClick(pD.menuButton.get(0));
-		ActionDriver.jsClick(pD.deletePanelDiscussion);
-		ActionDriver.jsClick(pD.confirmDeleteButton);
+		ActionDriver.safeClick(pD.deletePanelDiscussion);
+		ActionDriver.safeClick(pD.confirmDeleteButton);
 		verifySuccess(pD.panelDiscussionDeleteSuccessMessage, "Panel discussion deleted successfully");
 	}
+	@Test(priority = 3, invocationCount = 4, threadPoolSize = 1)
+	public void verifyDeletePanelDiscussionAll() throws InterruptedException {
+	    // Wait for any overlays/loaders to disappear
+	    ActionDriver.waitForElementNotVisible(By.cssSelector(".modal,.loader,.overlay"), 10);
+
+	    // Make sure there is at least one menu button
+	    if (pD.menuButton.isEmpty()) {
+	        Assert.fail("No menu buttons found. There might be no panel discussions to delete.");
+	    }
+
+	    // Click the menu of the first panel discussion
+	    ActionDriver.scrollToElement(pD.menuButton.get(0));
+	    ActionDriver.safeClick(pD.menuButton.get(0));
+	    ActionDriver.safeClick(pD.deletePanelDiscussion);
+	    ActionDriver.safeClick(pD.confirmDeleteButton);
+
+	    // Verify success message
+	    verifySuccess(pD.panelDiscussionDeleteSuccessMessage, "Panel discussion deleted successfully");
+
+	    // Wait before the next invocation
+	    Thread.sleep(2000);
+	}
+
 }

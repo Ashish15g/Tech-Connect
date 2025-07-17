@@ -87,7 +87,7 @@ public class WebinarsPage {
 			WebElement cancelButton;
 			//WebElements for the webinar details section
 			//Webinars Overview Info image upload or chaenge
-			public @FindBy(xpath = "//div[@class='fui-avatar-main-container fui-avatar-border-2']")
+			public @FindBy(xpath = "//img[@alt='Avatar2']")
 			WebElement webinarDetailsImage;
 			public @FindBy(xpath = "//button[text()='Change']")
 			WebElement changeImageButton;

@@ -27,7 +27,7 @@ public class AddNewPanelDiscussionFormTest3 extends BaseClass {
 
     @DataProvider(name = "panelDiscussionDP")
     public Object[][] getExcelData() throws Exception {
-        String sheetName = "PanelDiscussionData";
+        String sheetName = "PanelDiscussionDP";
         int rows = GetExcelData.getRows(sheetName);
         int cols = GetExcelData.getCells(sheetName);
 
@@ -80,6 +80,9 @@ public class AddNewPanelDiscussionFormTest3 extends BaseClass {
         // Parse years safely
         int startYearInt = Integer.parseInt(startYear.split("\\.")[0]);
         int endYearInt = Integer.parseInt(endYear.split("\\.")[0]);
+      
+        String startDaySplit = startDay.split("\\.")[0];
+        String endDaySplit = endDay.split("\\.")[0];
 
         // Add New Panel Discussion
         ActionDriver.scrollToElement(pD.addNewButton);
@@ -101,7 +104,7 @@ public class AddNewPanelDiscussionFormTest3 extends BaseClass {
         ActionDriver.enterText(pD.location, location);
 
         // Dates
-        selectDate(startMonth, startYearInt, startDay, endMonth, endYearInt, endDay);
+        selectDate(startMonth, startYearInt, startDaySplit, endMonth, endYearInt, endDaySplit);
 
         ActionDriver.safeClick(pD.outside_Click);
 
@@ -112,7 +115,7 @@ public class AddNewPanelDiscussionFormTest3 extends BaseClass {
         Thread.sleep(2000); // Wait for image upload
         ActionDriver.selectDropdownByVisibleText(pD.eventCategory.get(2), eventScope);
         ActionDriver.enterText(pD.eventUrl, eventUrl);
-        ActionDriver.enterText(pD.zoomLink, zoomLink);
+        //ActionDriver.enterText(pD.zoomLink, zoomLink);
 
         ActionDriver.scrollToElement(pD.submitButton);
         ActionDriver.waitForElementClickable(pD.submitButton, 10);
@@ -128,25 +131,25 @@ public class AddNewPanelDiscussionFormTest3 extends BaseClass {
             String startMonth, int startYear, String startDay,
             String endMonth, int endYear, String endDay) {
 
-        ActionDriver.scrollToElement(pD.start_date);
-        ActionDriver.safeClick(pD.start_date);
+        ActionDriver.scrollToElement(pD.startDateSection);
+        ActionDriver.safeClick(pD.startDateSection);
         GetDates.selectDatePro(
                 pD.start_monthElem,
                 pD.start_nextButton,
                 pD.start_previousButton,
-                pD.dateElements,
+                pD.startDateElements,
                 startMonth,
                 startYear,
                 startDay
         );
-
-        ActionDriver.scrollToElement(pD.end_date);
-        ActionDriver.safeClick(pD.end_date);
+        
+ 	   	//ActionDriver.scrollToElement(pD.end_date);
+        ActionDriver.safeClick(pD.endDateSection);
         GetDates.selectDatePro(
                 pD.end_monthElem,
                 pD.end_nextButton,
                 pD.start_previousButton,
-                pD.dateElements,
+                pD.endDateElements,
                 endMonth,
                 endYear,
                 endDay

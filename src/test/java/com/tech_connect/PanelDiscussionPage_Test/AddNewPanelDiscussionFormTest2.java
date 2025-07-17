@@ -4,71 +4,27 @@ import java.awt.AWTException;
 import org.testng.Assert;
 import org.testng.Reporter;
 import org.testng.annotations.BeforeClass;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import com.tech_connect.actiondriverclass.ActionDriver;
 import com.tech_connect.baseclass.BaseClass;
 import com.tech_connect.pagesclass.PanelDiscussionPage;
+import com.tech_connect.utilitiesclass.CommonDataProvider;
 import com.tech_connect.utilitiesclass.GetDates;
-import com.tech_connect.utilitiesclass.GetExcelData;
+import com.tech_connect.utilitiesclass.SheetName;
 
 public class AddNewPanelDiscussionFormTest2 extends BaseClass {
 
     private PanelDiscussionPage pD;
 
-    @BeforeClass
+@BeforeClass
     public void setup() {
         pD = new PanelDiscussionPage(driver);
         ActionDriver.click(pD.eventsSection);
         ActionDriver.click(pD.panelDiscussionsSection);
     }
 
-    @DataProvider(name = "panelDiscussionData1")
-    public Object[][] getExcelData1() throws Exception {
-        String sheetName = "PanelDiscussionData";
-        int rows = GetExcelData.getRows(sheetName);
-        int cols = GetExcelData.getCells(sheetName);
-
-        Object[][] data = new Object[rows - 1][cols];
-
-        for (int i = 1; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                data[i - 1][j] = GetExcelData.excelData(sheetName, i, j);
-            }
-        }
-        return data;
-    }
-    @DataProvider(name = "panelDiscussionData")
-    public Object[][] getExcelData() throws Exception {
-        String sheetName = "PanelDiscussionData";
-        int rows = GetExcelData.getRows(sheetName);
-        int cols = GetExcelData.getCells(sheetName);
-
-        Object[][] data = new Object[rows - 1][cols];
-
-        System.out.println("===== Reading data from sheet: " + sheetName + " =====");
-
-        for (int i = 1; i < rows; i++) {
-            for (int j = 0; j < cols; j++) {
-                String cellValue = GetExcelData.excelData(sheetName, i, j);
-                data[i - 1][j] = cellValue;
-                System.out.println("Row " + (i - 1) + " Col " + j + " = " + cellValue);
-            }
-        }
-
-        System.out.println("===== DataProvider data matrix =====");
-        for (int i = 0; i < data.length; i++) {
-            System.out.print("Row " + i + ": ");
-            for (int j = 0; j < data[i].length; j++) {
-                System.out.print(data[i][j] + " | ");
-            }
-            System.out.println();
-        }
-
-        return data;
-    }
-
-    @Test(dataProvider = "panelDiscussionData")
+@Test(priority = 1, dataProvider = "excelDataProvider", dataProviderClass = CommonDataProvider.class)
+@SheetName("panelDiscussionData")
     public void verifyAddPanelDiscussionForm(
     		String eventCategory,
             String eventName,
@@ -117,14 +73,17 @@ public class AddNewPanelDiscussionFormTest2 extends BaseClass {
 
         ActionDriver.safeClick(pD.outside_Click);
 
-        ActionDriver.scrollToElement(pD.webinarImage);
-        ActionDriver.waitForElementClickable(pD.webinarImage, 80);
-        ActionDriver.safeClick(pD.webinarImage);
+        ActionDriver.scrollToElement(pD.eventImage);
+        ActionDriver.waitForElementClickable(pD.eventImage, 80);
+        ActionDriver.safeClick(pD.eventImage);
         ActionDriver.uploadFile(imagePath);
+        //ActionDriver.waitForElementVisible(pD.imageThumbnail, 10);
         Thread.sleep(3000);
         ActionDriver.selectDropdownByVisibleText(pD.eventCategory.get(2), eventScope);
+        ActionDriver.waitForElementClickable(pD.eventUrl, 50);
         ActionDriver.enterText(pD.eventUrl, eventUrl);
-        ActionDriver.enterText(pD.zoomLink, zoomLink);
+        //ActionDriver.waitForElementClickable(pD.zoomLink, 50);
+        //ActionDriver.enterText(pD.zoomLink, zoomLink);
 
         ActionDriver.scrollToElement(pD.submitButton);
         ActionDriver.waitForElementClickable(pD.submitButton, 50);
@@ -133,16 +92,30 @@ public class AddNewPanelDiscussionFormTest2 extends BaseClass {
         ActionDriver.waitForElementVisible(pD.panelDiscussionAddSuccessMessage, 10);
         Assert.assertTrue(ActionDriver.isDisplayed(pD.panelDiscussionAddSuccessMessage),
                 "Success message not displayed");
-        Reporter.log("Panel Discussion added successfully: " + eventName, true);
+        Reporter.log("Test Pass: Panel Discussion added successfully: " + eventName, true);
     }
 
-    private void selectDate(String startMonth, int startYear, String startDay, String endMonth, int endYear, String endDay) {
-        ActionDriver.scrollToElement(pD.start_date);
-        ActionDriver.safeClick(pD.start_date);
-        GetDates.selectDatePro(pD.start_monthElem, pD.start_nextButton, pD.start_previousButton, pD.dateElements, startMonth, startYear, startDay);
-
-        ActionDriver.scrollToElement(pD.end_date);
-        ActionDriver.safeClick(pD.end_date);
-        GetDates.selectDatePro(pD.end_monthElem, pD.end_nextButton, pD.start_previousButton, pD.dateElements, endMonth, endYear, endDay);
-    }
+	private void selectDate(String startMonth, int startYear, String startDay, String endMonth, int endYear,
+			String endDay) {
+		// Start date
+		ActionDriver.scrollToElement(pD.startDateSection);
+		ActionDriver.waitForElementClickable(pD.startDateSection, 10);
+		ActionDriver.safeClick(pD.startDateSection);
+		ActionDriver.waitForElementVisible(pD.start_monthElem, 10);
+		// Wait for overlay to disappear if any
+		//ActionDriver.waitForNoOverlay(5); // Implement this in ActionDriver if not present
+		// Select start date
+		GetDates.selectDatePro(pD.start_monthElem, pD.start_nextButton, pD.start_previousButton, pD.startDateElements,
+				startMonth, startYear, startDay);
+		// End date
+		ActionDriver.scrollToElement(pD.endDateSection);
+		ActionDriver.waitForElementClickable(pD.endDateSection, 2000);
+		ActionDriver.safeClick(pD.endDateSection);
+		ActionDriver.waitForElementVisible(pD.end_monthElem, 2000);
+		// Wait for overlay to disappear if any
+		//ActionDriver.waitForNoOverlay(5);
+		// Select end date
+		GetDates.selectDatePro(pD.end_monthElem, pD.end_nextButton, pD.start_previousButton, pD.endDateElements, endMonth,
+				endYear, endDay);
+	}
 }
